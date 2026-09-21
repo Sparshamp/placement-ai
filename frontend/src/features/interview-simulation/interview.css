@@ -1,0 +1,447 @@
+/* Bridges this feature's original token names onto the app-wide theme in
+   index.css, so the whole app shares one palette without rewriting every
+   var() reference below. .landing / .interview-page / .final-report are
+   the three top-level wrappers InterviewPage.jsx actually renders. */
+.landing,
+.interview-page,
+.final-report {
+  --ink: var(--text);
+  --ink-soft: var(--text-muted);
+  --accent: var(--accent-focus);
+  --accent-hover: var(--accent-focus);
+  --accent-soft: var(--surface-alt);
+  --recording: var(--accent-incorrect);
+  --recording-soft: color-mix(in srgb, var(--accent-incorrect) 15%, var(--surface));
+}
+
+.interview-page {
+  max-width: 640px;
+  margin: 40px auto 0;
+  padding: 0 24px 96px;
+}
+
+/* ── Setup form ─────────────────────────────── */
+
+.setup-form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.setup-form h1 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 2px;
+  letter-spacing: -0.01em;
+}
+
+.setup-form .subhead {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.field input[type="text"],
+.field input[type="file"],
+.field textarea {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 9px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.field input[type="text"]:hover,
+.field textarea:hover {
+  border-color: #C7CDD6;
+}
+
+.field textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.btn-primary {
+  align-self: flex-start;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.15s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Question card ──────────────────────────── */
+
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.question-card .eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin: 0 0 10px;
+}
+
+.question-card p {
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  color: var(--ink);
+}
+
+/* ── Answer recorder ────────────────────────── */
+
+.answer-recorder {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.answer-recorder video {
+  width: 200px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.btn-record,
+.btn-stop {
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-record {
+  background: var(--accent);
+  color: white;
+  transition: background 0.15s ease;
+}
+
+.btn-record:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn-record:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-stop {
+  background: var(--recording-soft);
+  color: var(--recording);
+  border: 1px solid #FDA29B;
+  position: relative;
+  padding-left: 32px;
+}
+
+.btn-stop::before {
+  content: "";
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--recording);
+}
+
+.processing-note {
+  color: var(--ink-soft);
+  font-size: 13px;
+  margin: 0;
+}
+
+/* ── Feedback panel ─────────────────────────── */
+
+.feedback-panel {
+  background: var(--accent-soft);
+  border: 1px solid #D1E0FF;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.feedback-panel h3 {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin: 0 0 6px;
+  color: var(--accent);
+}
+
+.feedback-panel p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.feedback-panel .emotion-note {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+/* ── Final report ───────────────────────────── */
+
+.final-report {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.final-report h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.final-report .report-body {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  font-size: 15px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.final-report .emotion-summary {
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+/* ── Header ─────────────────────────────────── */
+
+.app-header {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 24px 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.brand-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--accent);
+}
+
+/* ── Landing wrapper ────────────────────────── */
+
+.landing {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.app-header {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 16px 0 0;
+  position: absolute;
+  top: 0;
+  left: 24px;
+  right: 24px;
+}
+
+/* ── Hero ───────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 32px;
+  padding: 56px 0 24px;
+}
+
+.eyebrow-badge {
+  display: inline-block;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 12px;
+}
+
+.hero-copy h1 {
+  font-size: clamp(26px, 3.2vh, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 10px;
+}
+
+.hero-subhead {
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 420px;
+  margin: 0;
+}
+
+.hero-art img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ── Feature cards — compact row instead of tall cards ── */
+
+.features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.feature-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.feature-icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.feature-card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 2px;
+}
+
+.feature-card p {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Setup form — denser ─────────────────────── */
+
+.setup-section .setup-form {
+  padding: 20px 24px;
+  gap: 12px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+}
+
+.setup-form h1 {
+  display: none; /* headline already said above in the hero — no need twice */
+}
+
+.setup-form .subhead {
+  font-size: 13px;
+  margin-bottom: 0;
+}
+
+.field textarea {
+  min-height: 56px;
+}
+
+@media (max-width: 720px) {
+  .landing { min-height: auto; padding-top: 72px; padding-bottom: 40px; }
+  .hero { grid-template-columns: 1fr; padding-top: 24px; }
+  .features { grid-template-columns: 1fr; }
+  .hero-art { order: -1; max-width: 160px; }
+}
+
+.btn-end-session {
+  display: block;
+  margin: 8px auto 0;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  font-size: 13px;
+}
+
+.btn-end-session:hover {
+  border-color: #C7CDD6;
+  color: var(--ink);
+}

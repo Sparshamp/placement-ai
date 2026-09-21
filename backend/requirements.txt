@@ -1,0 +1,43 @@
+# ── Core API framework ───────────────────────────────
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9        # required for FastAPI file/form uploads (UploadFile, Form)
+pydantic==2.9.2
+
+# ── Resume parsing (resume_reader.py) ────────────────
+pdfplumber==0.11.4              # .pdf resumes
+python-docx==1.1.2              # .docx resumes
+ipython
+
+# ── LLM calls to remote Ollama (llm.py) ──────────────
+requests==2.32.3                # HTTP calls to Ollama on the GPU machine
+
+# ── Speech-to-text microservice (whisper_server.py) ──
+faster-whisper==1.0.3           # local CPU transcription server
+
+# ── Emotion detection (emotion_analyzer.py) ──────────
+opencv-python-headless==4.10.0.84   # headless: no GUI libs needed on a server
+deepface==0.0.93
+tf-keras==2.17.0                    # deepface needs this for TF>=2.16 compatibility
+numpy==1.26.4
+
+# NOTE: no TTS dependency needed — speech is generated client-side via the
+# browser's built-in Web Speech API (window.speechSynthesis), not edge-tts.
+
+pandas>=2.0.0
+psycopg2-binary>=2.9.0
+sqlalchemy>=2.0.0
+python-dotenv>=1.0.0
+boto3
+
+# ── Job recommendation (hybrid pipeline + resume preprocessing) ──
+chromadb>=0.5.0
+sentence-transformers<5
+transformers<5
+spacy>=3.7.0
+skillNer>=1.0.3
+# After pip install, also run: python -m spacy download en_core_web_lg
+
+pyjwt>=2.8.0
+bcrypt>=4.1.2
+email-validator>=2.1.0

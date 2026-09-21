@@ -1,0 +1,67 @@
+# =========================================
+# Python / Backend
+# =========================================
+
+# Virtual environment
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python build files
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+
+# =========================================
+# Node / Frontend
+# =========================================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build output
+dist/
+dist-ssr/
+
+# Local environment files
+*.local
+
+
+# =========================================
+# Editors
+# =========================================
+
+.vscode/*
+!.vscode/extensions.json
+
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+# =========================================
+# Project-specific
+# =========================================
+folder and commands.txtbackend/app/features/job_recommendation/data/jobs_db/
+
+backend/app/features/adaptive_aptitude/data/images/

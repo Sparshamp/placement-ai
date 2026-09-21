@@ -1,0 +1,606 @@
+:root {
+  /* ---- Color tokens ----
+     Deliberately not the cream+terracotta or near-black+neon defaults.
+     Deep indigo study-focus background; warm amber is the ONE accent that
+     means something specific (mastery progress) -- everything else is
+     quiet by comparison. Green/red are purely functional (correct/
+     incorrect), never used decoratively. */
+  --bg: #14171f;
+  --surface: #1e2230;
+  --surface-alt: #262b3d;
+  --border: #333a52;
+  --text: #e7e9f2;
+  --text-muted: #9297ac;
+  --text-faint: #676d85;
+
+  --accent-mastery: #e8a33d;   /* the one warm accent -- mastery/focus progress */
+  --accent-mastery-dim: #7a5a2c;
+  --accent-focus: #6e85f7;     /* primary actions, links, active nav */
+  --accent-correct: #4ade80;
+  --accent-incorrect: #f26d6d;
+
+  /* ---- Type tokens ---- */
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+/* Light theme -- same semantic roles as :root (dark, default), darkened
+   accents so they still meet contrast on a light background. Toggled via
+   ThemeToggle.jsx setting data-theme on <html>; see index.html's inline
+   script for the pre-React-mount version that avoids a flash of the
+   wrong theme on load. */
+[data-theme="light"] {
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface-alt: #eef0f7;
+  --border: #dde1ec;
+  --text: #1c1f2b;
+  --text-muted: #5b607a;
+  --text-faint: #8990ab;
+
+  --accent-mastery: #c9791f;
+  --accent-mastery-dim: #e8cca3;
+  --accent-focus: #4a5fd6;
+  --accent-correct: #17924f;
+  --accent-incorrect: #d5453f;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4em 0;
+}
+
+h1 { font-size: 1.7rem; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.05rem; }
+
+p { margin: 0 0 0.9em 0; }
+
+code, .mono {
+  font-family: var(--font-mono);
+}
+
+a {
+  color: var(--accent-focus);
+}
+
+button {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  padding: 0.55em 1.1em;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+button:hover:not(:disabled) {
+  border-color: var(--accent-focus);
+}
+
+button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent-focus);
+  border-color: var(--accent-focus);
+  color: #0d1020;
+  font-weight: 600;
+}
+
+button.primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+
+button.subtle {
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+
+button.subtle:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+input[type="text"] {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: 0.6em 0.8em;
+  width: 100%;
+}
+
+input[type="text"]:focus {
+  outline: 2px solid var(--accent-focus);
+  outline-offset: -1px;
+  border-color: var(--accent-focus);
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem;
+}
+
+.muted { color: var(--text-muted); }
+.faint { color: var(--text-faint); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ---- App shell / sidebar ----
+   Fixed to the viewport height with only .main-content scrolling
+   internally, so the sidebar (nav, theme toggle, status dot) stays
+   fully visible at all times instead of scrolling away with page
+   content. */
+.app-shell {
+  display: flex;
+  height: 100vh;
+  height: 100dvh; /* falls back to 100vh in browsers that don't support dvh */
+}
+
+.sidebar {
+  flex-shrink: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 1rem 0.8rem;
+  transition: width 0.18s ease, padding 0.18s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.sidebar--collapsed {
+  width: 60px;
+  align-items: center;
+}
+
+.sidebar--expanded {
+  width: 260px;
+  padding: 1.2rem;
+}
+
+.sidebar input[type="text"] {
+  margin-bottom: 0.6rem;
+}
+
+.sidebar-toggle {
+  align-self: flex-start;
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  padding: 0.4em 0.6em;
+  margin-bottom: 0.6rem;
+}
+
+.sidebar-toggle:hover {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+.side-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55em 0.7em;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.sidebar--collapsed .side-nav-link {
+  justify-content: center;
+  padding: 0.6em;
+}
+
+.side-nav-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.side-nav-link:hover {
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+.side-nav-link--active {
+  background: var(--surface-alt);
+  color: var(--accent-focus);
+}
+
+.sidebar-spacer {
+  flex: 1;
+}
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  justify-content: flex-start;
+  background: transparent;
+  border-color: transparent;
+  margin-top: 0.4rem;
+}
+
+.sidebar--collapsed .theme-toggle {
+  justify-content: center;
+  padding: 0.6em;
+}
+
+.sidebar-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5em 0.6em;
+  width: 100%;
+}
+
+.sidebar--collapsed .sidebar-status {
+  justify-content: center;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-dot--ok { background: var(--accent-correct); }
+.status-dot--down { background: var(--accent-incorrect); }
+.status-dot--unknown { background: var(--text-faint); }
+
+.main-content {
+  flex: 1;
+  height: 100%;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+/* Both page containers are centered and now use most of the available
+   width instead of a narrow fixed column -- capped, not full-bleed,
+   since question/table text becomes uncomfortable to read at very wide
+   line lengths. Increase further if you want it to go edge-to-edge. */
+.page-narrow { max-width: 820px; width: 100%; }
+.page-wide { max-width: 1100px; width: 100%; }
+
+hr.review-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.2rem 0;
+}
+
+/* ---- Category / subject picker grid ---- */
+.category-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+}
+
+/* ---- Question card ---- */
+.question-card {
+  margin-top: 1rem;
+}
+
+.question-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.6rem;
+}
+
+.difficulty-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.question-text {
+  margin-bottom: 1.1rem;
+  white-space: pre-wrap; /* respect \n AND runs of spaces from the question bank as
+                             literal formatting (e.g. match-following alignment) --
+                             pre-line was collapsing repeated spaces; pre-wrap keeps
+                             them while still wrapping long lines normally */
+  font-size: 1.08rem;    /* smaller than the default h2 (1.3rem) -- long
+                             question bodies with embedded code read better
+                             at a size closer to body text */
+  line-height: 1.5;
+}
+
+.question-image {
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.1rem;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65em 0.9em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: var(--surface-alt);
+}
+
+.option-row:hover {
+  border-color: var(--accent-focus);
+}
+
+.option-row--selected {
+  border-color: var(--accent-focus);
+  background: color-mix(in srgb, var(--accent-focus) 12%, var(--surface-alt));
+}
+
+.option-row input[type="radio"] {
+  accent-color: var(--accent-focus);
+}
+
+.option-letter {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  width: 1.1em;
+}
+
+.option-row--review {
+  cursor: default;
+  justify-content: space-between;
+}
+
+.option-row--correct {
+  border-color: var(--accent-correct);
+  background: color-mix(in srgb, var(--accent-correct) 10%, var(--surface-alt));
+}
+
+.option-row--incorrect {
+  border-color: var(--accent-incorrect);
+  background: color-mix(in srgb, var(--accent-incorrect) 10%, var(--surface-alt));
+}
+
+.review-tag {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.warning-text {
+  color: var(--accent-incorrect);
+  font-size: 0.9rem;
+}
+
+/* ---- Progress bar ---- */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--surface-alt);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent-mastery);
+  transition: width 0.4s ease;
+}
+
+.session-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+/* ---- Feedback banner ---- */
+.feedback-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+
+.feedback-banner--correct {
+  border-color: var(--accent-correct);
+  background: color-mix(in srgb, var(--accent-correct) 8%, var(--surface));
+}
+
+.feedback-banner--partial {
+  border-color: var(--accent-mastery);
+  background: color-mix(in srgb, var(--accent-mastery) 8%, var(--surface));
+}
+
+.feedback-banner--incorrect {
+  border-color: var(--accent-incorrect);
+  background: color-mix(in srgb, var(--accent-incorrect) 8%, var(--surface));
+}
+
+/* ---- Review panel ---- */
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.review-nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.review-nav button {
+  flex: 1;
+}
+
+/* ---- Stats / tables / bar chart (Practice summary + Dashboard) ---- */
+.summary-stats {
+  display: flex;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.data-table th, .data-table td {
+  text-align: left;
+  padding: 0.55em 0.7em;
+  border-bottom: 1px solid var(--border);
+}
+
+.data-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 160px 1fr 48px;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.bar-track {
+  height: 10px;
+  background: var(--surface-alt);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent-mastery);
+}
+
+.bar-value {
+  text-align: right;
+}
+
+pre.mono {
+  background: var(--surface-alt);
+  padding: 0.8em 1em;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+}
+
+/* ---- Responsive: collapse sidebar into a top bar on narrow viewports ---- */
+@media (max-width: 720px) {
+  .app-shell { flex-direction: column; height: auto; min-height: 100dvh; }
+  .sidebar,
+  .sidebar--collapsed,
+  .sidebar--expanded {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 0.8rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .side-nav { flex-direction: row; }
+  .main-content { height: auto; padding: 1.2rem; }
+  .bar-row { grid-template-columns: 100px 1fr 40px; }
+}

@@ -1,0 +1,32 @@
+.mastery-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mastery-ring-track {
+  fill: none;
+  stroke: var(--surface-alt);
+  stroke-width: 5;
+}
+
+.mastery-ring-fill {
+  fill: none;
+  stroke: var(--accent-mastery);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+.mastery-ring-fill--done {
+  stroke: var(--accent-correct);
+}
+
+.mastery-ring-label {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}

@@ -1,0 +1,20 @@
+Priya Sharma
+priya.sharma@example.com | Bengaluru, India
+
+Summary
+Software engineer with 3 years of experience in backend development, REST APIs, and cloud-native services.
+
+Skills
+Python, FastAPI, Java, Spring Boot, SQL, PostgreSQL, React, Docker, Git, REST API
+
+Experience
+Software Engineer — Infosys, Bengaluru (2022–Present)
+3 years of experience building REST APIs and data services using Python and FastAPI.
+Worked with PostgreSQL, Docker, and React dashboards for internal tools.
+
+Education
+B.Tech Computer Science — PES University, 2022
+
+Projects
+Placement Portal — FastAPI backend with a React frontend and PostgreSQL storage.
+Resume Parser — Python pipeline that extracts skills and experience from resumes.

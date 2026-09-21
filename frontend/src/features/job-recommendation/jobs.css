@@ -1,0 +1,88 @@
+.jobs-page .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 1rem 0;
+}
+
+.jobs-upload h1 {
+  margin-bottom: 0.3rem;
+}
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.job-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.job-match {
+  white-space: nowrap;
+  font-size: 0.85rem;
+}
+
+.job-skills {
+  margin: 0.4rem 0 0.7rem;
+}
+
+.job-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.8rem;
+}
+
+.job-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.job-description {
+  white-space: pre-wrap;
+}
+
+.tailored-preview {
+  max-height: 480px;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-alt);
+  color: var(--text);
+  padding: 0.55em 1.1em;
+  font-weight: 500;
+}
+
+.primary-link {
+  background: var(--accent-focus);
+  border-color: var(--accent-focus);
+  color: #0d1020;
+  font-weight: 600;
+}
+
+.skill-gap-list {
+  margin: 0.4rem 0 1rem;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skill-gap-list li p {
+  margin: 0.15rem 0 0;
+}
