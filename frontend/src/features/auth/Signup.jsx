@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../shared/auth/AuthContext";
+import AuthLayout from "./AuthLayout";
 
 export default function Signup() {
   const { signup } = useAuth();
@@ -26,25 +27,57 @@ export default function Signup() {
   }
 
   return (
-    <div className="page-narrow">
-      <h2>Create an account</h2>
-      <form onSubmit={handleSubmit}>
-        <label className="muted" htmlFor="signup-name">Name</label>
-        <input id="signup-name" type="text" value={displayName} onChange={(e) => setDisplayName(e.target.value)} required />
+    <AuthLayout>
+      <h2>Create your account</h2>
+      <p className="muted auth-lead">A few details and you&apos;re ready to start practicing.</p>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="auth-field">
+          <label className="muted" htmlFor="signup-name">Name</label>
+          <input
+            id="signup-name"
+            type="text"
+            autoComplete="name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            required
+          />
+        </div>
 
-        <label className="muted" htmlFor="signup-email" style={{ marginTop: "0.8rem", display: "block" }}>Email</label>
-        <input id="signup-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <div className="auth-field">
+          <label className="muted" htmlFor="signup-email">Email</label>
+          <input
+            id="signup-email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-        <label className="muted" htmlFor="signup-password" style={{ marginTop: "0.8rem", display: "block" }}>Password (min. 8 characters)</label>
-        <input id="signup-password" type="password" minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <div className="auth-field">
+          <label className="muted" htmlFor="signup-password">Password</label>
+          <input
+            id="signup-password"
+            type="password"
+            autoComplete="new-password"
+            minLength={8}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <span className="faint">At least 8 characters.</span>
+        </div>
 
         {error && <p className="warning-text">{error}</p>}
 
-        <button className="primary" type="submit" disabled={busy} style={{ marginTop: "1.2rem" }}>
+        <button className="primary" type="submit" disabled={busy}>
           {busy ? "Creating account…" : "Sign up"}
         </button>
       </form>
-      <p className="muted" style={{ marginTop: "1rem" }}>Already have an account? <Link to="/login">Log in</Link></p>
-    </div>
+      <p className="muted auth-switch">
+        Already have an account? <Link to="/login">Log in</Link>
+      </p>
+    </AuthLayout>
   );
 }

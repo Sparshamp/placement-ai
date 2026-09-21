@@ -137,18 +137,26 @@ button.subtle:hover:not(:disabled) {
   border-color: var(--border);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="number"] {
   font-family: var(--font-body);
   font-size: 0.95rem;
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text);
-  padding: 0.6em 0.8em;
+  padding: 0.7em 0.85em;
   width: 100%;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="search"]:focus,
+input[type="number"]:focus {
   outline: 2px solid var(--accent-focus);
   outline-offset: -1px;
   border-color: var(--accent-focus);

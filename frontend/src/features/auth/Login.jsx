@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../shared/auth/AuthContext";
+import AuthLayout from "./AuthLayout";
 
 export default function Login() {
   const { login } = useAuth();
@@ -26,22 +27,43 @@ export default function Login() {
   }
 
   return (
-    <div className="page-narrow">
-      <h2>Log in</h2>
-      <form onSubmit={handleSubmit}>
-        <label className="muted" htmlFor="login-email">Email</label>
-        <input id="login-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+    <AuthLayout>
+      <h2>Welcome back</h2>
+      <p className="muted auth-lead">Log in to continue your placement prep.</p>
+      <form className="auth-form" onSubmit={handleSubmit}>
+        <div className="auth-field">
+          <label className="muted" htmlFor="login-email">Email</label>
+          <input
+            id="login-email"
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
 
-        <label className="muted" htmlFor="login-password" style={{ marginTop: "0.8rem", display: "block" }}>Password</label>
-        <input id="login-password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <div className="auth-field">
+          <label className="muted" htmlFor="login-password">Password</label>
+          <input
+            id="login-password"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
 
         {error && <p className="warning-text">{error}</p>}
 
-        <button className="primary" type="submit" disabled={busy} style={{ marginTop: "1.2rem" }}>
+        <button className="primary" type="submit" disabled={busy}>
           {busy ? "Logging in…" : "Log in"}
         </button>
       </form>
-      <p className="muted" style={{ marginTop: "1rem" }}>Don't have an account? <Link to="/signup">Sign up</Link></p>
-    </div>
+      <p className="muted auth-switch">
+        Don&apos;t have an account? <Link to="/signup">Sign up</Link>
+      </p>
+    </AuthLayout>
   );
 }

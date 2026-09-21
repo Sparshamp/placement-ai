@@ -86,3 +86,111 @@
 .skill-gap-list li p {
   margin: 0.15rem 0 0;
 }
+
+.skill-gap-headline {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0.4rem 0 0.6rem;
+}
+
+.skill-gap-summary {
+  font-size: 1.02rem;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+
+.skill-gap-focus {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: var(--text-muted);
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.15em 0.7em;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--accent-focus);
+}
+
+.skill-gap-advice {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.8rem;
+  margin: 0.5rem 0 1.2rem;
+}
+
+.skill-gap-advice-card {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.95rem 1rem;
+}
+
+.skill-gap-advice-card h4 {
+  margin: 0 0 0.4rem;
+  font-size: 0.98rem;
+}
+
+.skill-gap-advice-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.skill-gap-path {
+  margin: 0.4rem 0 1.2rem;
+  padding-left: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.skill-gap-path-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.readiness {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  padding: 0.1em 0.55em;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.readiness--ready_now {
+  color: var(--accent-correct);
+  border-color: color-mix(in srgb, var(--accent-correct) 40%, var(--border));
+}
+
+.skill-gap-chips {
+  list-style: none;
+  margin: 0.4rem 0 1.2rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.skill-gap-closing {
+  margin-top: 0.4rem;
+  font-weight: 500;
+}
+
+.skill-gap-source {
+  margin-top: 1rem;
+  margin-bottom: 0;
+}

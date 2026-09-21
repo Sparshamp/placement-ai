@@ -19,7 +19,7 @@ from app.features.job_recommendation.config import (
 from app.features.job_recommendation.ingest_jobs import ensure_jobs_index
 from app.features.job_recommendation.resume_processing.pipeline import process_one
 from app.features.job_recommendation.resume_processing.step1_parser import parse_resume_bytes
-from app.features.job_recommendation.skill_gap_llm import explain_with_llm
+from app.features.job_recommendation.skill_gap_llm import attach_candidate_context, explain_with_llm
 from app.features.job_recommendation.skill_overlap import enrich_recommendations
 
 logger = logging.getLogger(__name__)
@@ -307,9 +307,11 @@ def _to_skill_gap_response(session_id: str, grounded: dict, explanation: dict) -
         "closestRoles": [_to_skill_gap_job(j) for j in grounded.get("closest_roles") or []],
         "skillGraph": grounded.get("skill_graph") or {"nodes": [], "edges": []},
         "explanation": {
+            "headline": explanation.get("headline") or "",
             "summary": explanation.get("summary") or "",
             "jobAdvice": explanation.get("job_advice") or [],
             "strategicLearningSequence": explanation.get("strategic_learning_sequence") or [],
+            "closing": explanation.get("closing") or "",
             "usedLlm": bool(explanation.get("used_llm")),
             "backend": explanation.get("backend") or "grounded-fallback",
         },
@@ -325,5 +327,6 @@ def analyze_session_recommendations(session_id: str, top_n: int = 5) -> dict:
     grounded = skill_gap_analysis.analyze_recommendations(
         session["preprocessed"], session["recommendations"], top_n_jobs=top_n,
     )
+    attach_candidate_context(grounded, session["preprocessed"])
     explanation = explain_with_llm(grounded, model=SKILL_GAP_MODEL)
     return _to_skill_gap_response(session_id, grounded, explanation)

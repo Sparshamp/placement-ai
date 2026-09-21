@@ -1,0 +1,123 @@
+.auth-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(280px, 1.05fr) minmax(320px, 0.95fr);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.auth-theme {
+  position: fixed;
+  top: 0.8rem;
+  right: 0.8rem;
+  z-index: 2;
+}
+
+.auth-theme .theme-toggle {
+  width: auto;
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3.5rem 4rem;
+  background:
+    radial-gradient(1200px 500px at -10% 0%, color-mix(in srgb, var(--accent-focus) 22%, transparent), transparent 60%),
+    linear-gradient(180deg, var(--surface) 0%, var(--bg) 100%);
+  border-right: 1px solid var(--border);
+}
+
+.auth-kicker {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-focus);
+  margin-bottom: 0.8rem;
+}
+
+.auth-brand h1 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.15;
+  max-width: 12ch;
+  margin-bottom: 1rem;
+}
+
+.auth-brand p:last-child {
+  max-width: 38ch;
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: calc(var(--radius) + 4px);
+  padding: 2rem 1.8rem 1.7rem;
+  box-shadow: 0 18px 50px color-mix(in srgb, #000 22%, transparent);
+}
+
+.auth-card h2 {
+  margin-bottom: 0.25rem;
+}
+
+.auth-lead {
+  margin-bottom: 1.4rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.auth-field label {
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.auth-form button.primary {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.75em 1.1em;
+}
+
+.auth-switch {
+  margin: 1.1rem 0 0;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  .auth-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-brand {
+    display: none;
+  }
+
+  .auth-panel {
+    padding: 4.5rem 1.1rem 2rem;
+  }
+}

@@ -97,9 +97,11 @@ class SkillGraph(BaseModel):
 
 
 class SkillGapExplanation(BaseModel):
+    headline: str = ""
     summary: str = ""
     jobAdvice: List[dict] = Field(default_factory=list)
     strategicLearningSequence: List[str] = Field(default_factory=list)
+    closing: str = ""
     usedLlm: bool = False
     backend: str = "grounded-fallback"
 
